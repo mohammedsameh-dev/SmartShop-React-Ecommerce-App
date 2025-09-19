@@ -1,0 +1,27 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./Pages/HomePage";
+import Contact from "./Pages/Contact";
+import CartPage from "./Pages/CartPage";
+import ProductPage from "./Pages/ProductPage";
+import Layout from "./Components/Layout";
+import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage";
+import UsersPage from "./Pages/UsersPage";
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="Contact" element={<Contact />} />
+          <Route path="CartPage" element={<CartPage />} />
+          <Route path="ProductPage" element={<ProductPage />} />
+        </Route>
+        <Route path="/RegisterPage" element={<RegisterPage />} />
+        <Route path="/LoginPage" element={<LoginPage />} />
+        <Route path="*" element={<h1>404 Page</h1>} />
+        <Route path="UsersPage" element={<UsersPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
