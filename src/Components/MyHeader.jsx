@@ -1,23 +1,25 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../Store";
+import Logo from "../assets/store-2017.svg";
 export default function MyHeader() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate("/LoginPage");
+  };
   return (
     <nav className="bg-white dark:bg-gray-900 w-full border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="max-w-screen-xl flex flex-wrap gap-5 items-center justify-between mx-auto p-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Logo"
-          />
+          <img src={Logo} className="h-8" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            MySite
+            CarrySite
           </span>
         </Link>
 
@@ -25,12 +27,18 @@ export default function MyHeader() {
           <Link to="/LoginPage">
             <button
               type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
-              focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
-              px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 
-              dark:focus:ring-blue-800"
+              className="btn btn-primary btn-outline rounded-2xl w-20"
             >
               Login
+            </button>
+          </Link>
+          <Link to="/LoginPage">
+            <button
+              type="button"
+              className="btn btn-error btn-outline rounded-2xl ml-2 w-20"
+              onClick={handleLogout}
+            >
+              Logout
             </button>
           </Link>
           <button
@@ -63,7 +71,7 @@ export default function MyHeader() {
         </div>
 
         <div
-          className={`items-center justify-between ${
+          className={`  items-center justify-between ${
             isOpen ? "flex" : "hidden"
           } w-full md:flex md:w-auto md:order-1`}
           id="navbar-sticky"

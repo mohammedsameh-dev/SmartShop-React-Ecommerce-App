@@ -1,9 +1,8 @@
 import { useCartItem } from "../Store";
 import toast, { Toaster } from "react-hot-toast";
-
+import Swal from "sweetalert2";
 export default function CartPage() {
   const { item: cartItems, removeItemFromCart, clearCart } = useCartItem();
-
   const total = Array.isArray(cartItems)
     ? cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
     : 0;
@@ -64,7 +63,7 @@ export default function CartPage() {
                   </h3>
                   <div className="flex justify-between text-gray-700 dark:text-gray-300 mb-2">
                     <span>Subtotal</span>
-                    <span>${total}</span>
+                    <span>${parseFloat(total).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-gray-700 dark:text-gray-300 mb-2">
                     <span>Shipping</span>
@@ -73,7 +72,7 @@ export default function CartPage() {
                   <hr className="my-2 border-gray-300 dark:border-gray-600" />
                   <div className="flex justify-between font-bold text-gray-900 dark:text-white text-lg">
                     <span>Total</span>
-                    <span>${total + 10}</span>
+                    <span>${(total + 10).toFixed(2)}</span>
                   </div>
                   <button
                     className="btn btn-warning btn-outline w-full mt-4 mb-2"
@@ -84,7 +83,17 @@ export default function CartPage() {
                   >
                     Clear Cart
                   </button>
-                  <button className="btn btn-success btn-outline w-full mt-2">
+                  <button
+                    className="btn btn-success btn-outline w-full mt-2"
+                    onClick={() => {
+                      clearCart();
+                      Swal.fire({
+                        title: "Payment Done Successfully",
+                        icon: "success",
+                        draggable: true,
+                      });
+                    }}
+                  >
                     Checkout
                   </button>
                 </div>

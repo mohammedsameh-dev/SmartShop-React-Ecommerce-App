@@ -3,12 +3,13 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { domain, useUserStore } from "../Store";
+import { domain, useAuthStore, useUserStore } from "../Store";
 import { useEffect } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { users, setUsers } = useUserStore();
+  const {login} = useAuthStore();
   useEffect(() => {
     const localUsers = JSON.parse(localStorage.getItem("users") || "[]");
     if (users.length === 0) {
@@ -45,6 +46,7 @@ export default function LoginPage() {
 
     if (foundUser) {
       toast.success("Login successful 🎉");
+      login(foundUser.email);
       setTimeout(() => {
         navigate("/");
       }, 800);

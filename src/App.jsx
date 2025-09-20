@@ -7,11 +7,20 @@ import Layout from "./Components/Layout";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
 import UsersPage from "./Pages/UsersPage";
+import ProtectedRoute from "./Components/ProtectedRoute";
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<HomePage />} />
           <Route path="Contact" element={<Contact />} />
           <Route path="CartPage" element={<CartPage />} />
@@ -19,8 +28,15 @@ export default function App() {
         </Route>
         <Route path="/RegisterPage" element={<RegisterPage />} />
         <Route path="/LoginPage" element={<LoginPage />} />
+        <Route
+          path="UsersPage"
+          element={
+            <ProtectedRoute>
+              <UsersPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<h1>404 Page</h1>} />
-        <Route path="UsersPage" element={<UsersPage />} />
       </Routes>
     </BrowserRouter>
   );

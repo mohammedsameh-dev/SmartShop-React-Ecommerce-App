@@ -16,6 +16,7 @@ export const LoaderIndex = create((set) => ({
   openLoader: () => set({ value: true }),
   closeLoader: () => set({ value: false }),
 }));
+
 export const useCartItem = create((set, get) => ({
   item: JSON.parse(localStorage.getItem("cartItems")) || [],
   AddItemToCart: (product) => {
@@ -53,5 +54,17 @@ export const useCartItem = create((set, get) => ({
   clearCart: () => {
     set({ item: [] });
     localStorage.removeItem("cartItems");
+  },
+}));
+
+export const useAuthStore = create((set) => ({
+  isAuth: !!localStorage.getItem("authToken"),
+  login: (token) => {
+    localStorage.setItem("authToken", token);
+    set({ isAuth: true });
+  },
+  logout: () => {
+    localStorage.removeItem("authToken");
+    set({ isAuth: false });
   },
 }));
