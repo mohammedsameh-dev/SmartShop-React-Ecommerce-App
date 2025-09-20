@@ -1,9 +1,9 @@
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useCartItem } from "../Store";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 export default function Card({ el }) {
   const { AddItemToCart } = useCartItem();
-
   const productAdded = () => {
     toast.success("Product Added Successfully");
     AddItemToCart(el);
@@ -11,11 +11,11 @@ export default function Card({ el }) {
 
   return (
     <div className="card bg-white dark:bg-gray-800 dark:hover:bg-blue-950 w-80 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-      <Toaster />
       <figure className="px-6 pt-6">
-        <img
+        <LazyLoadImage
           src={el.image}
           alt={el.title}
+          effect="blur"
           className="rounded-xl w-40 h-40 object-contain"
         />
       </figure>

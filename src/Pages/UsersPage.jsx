@@ -2,7 +2,7 @@ import axios from "axios";
 import { domain, useUserStore } from "../Store/index";
 import { useEffect } from "react";
 import MyHeader from "../Components/MyHeader";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 export default function UsersPage() {
   const delNewUserModal = (id) => {
     axios
@@ -38,7 +38,6 @@ export default function UsersPage() {
   return (
     <>
       <MyHeader />
-      <Toaster />
       <table className="table">
         <thead>
           <tr>

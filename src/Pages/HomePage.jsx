@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import CheckInbox from "../Components/CheckInbox";
@@ -20,46 +20,46 @@ export default function HomePage() {
     axios
       .get(domain + "/products")
       .then((res) => {
-        console.log("All products:", res.data);
         setProducts(res.data);
         setFeaturedProducts(res.data.slice(0, 6));
       })
       .catch((err) => {
         toast.error("Something went wrong!");
-        console.error(err);
+        console.log(err);
       });
-
     axios
       .get(domain + "/products/categories")
       .then((res) => {
-        console.log("Categories:", res.data);
         setCategories(res.data);
 
-        res.data.forEach((category) => {
-          axios
-            .get(domain + `/products/category/${category}?limit=1`)
-            .then((res) => {
-              if (res.data.length > 0) {
-                setCategoryProducts((prev) => ({
-                  ...prev,
-                  [category]: res.data[0].image,
-                }));
+        Promise.all(
+          res.data.map((category) =>
+            axios.get(`${domain}/products/category/${category}?limit=1`)
+          )
+        )
+          .then((results) => {
+            const catProducts = {};
+            results.forEach((r, idx) => {
+              if (r.data.length > 0) {
+                catProducts[res.data[idx]] = r.data[0].image;
               }
-            })
-            .catch((err) => {
-              toast.error(`Error fetching product`);
-              console.log(err);
             });
-        });
+            setCategoryProducts(catProducts);
+          })
+          .catch((err) => {
+            toast.error("Error fetching category products");
+            console.log(err);
+          });
       })
+
       .catch((err) => {
-        console.error("Error fetching categories:", err);
+        toast.error("Error fetching categories");
+        console.log(err);
       });
   }, []);
 
   return (
     <div className="w-full">
-      <Toaster />
       <Hero />
       <Features />
       {/* Categ Section */}
@@ -109,10 +109,7 @@ export default function HomePage() {
                   title: "Products Page",
                   icon: "success",
                   draggable: true,
-                });
-                setTimeout(() => {
-                  navigate("./ProductPage");
-                }, 900);
+                }).then(navigate("/ProductPage"));
               }}
             >
               View All Products ({products.length} items)

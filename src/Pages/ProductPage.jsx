@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Card from "../Components/Card";
 import axios from "axios";
 import { domain } from "../Store";
-
 export default function ProductPage() {
   const [data, setData] = useState([]);
 
@@ -10,7 +9,6 @@ export default function ProductPage() {
     axios
       .get(domain + "/products")
       .then((res) => {
-        console.log(res.data);
         setData(res.data);
       })
       .catch((err) => {

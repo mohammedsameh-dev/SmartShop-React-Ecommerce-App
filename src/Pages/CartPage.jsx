@@ -1,5 +1,5 @@
 import { useCartItem } from "../Store";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 export default function CartPage() {
   const { item: cartItems, removeItemFromCart, clearCart } = useCartItem();
@@ -9,7 +9,6 @@ export default function CartPage() {
 
   return (
     <>
-      <Toaster />
       <div className="min-h-screen bg-gray-200 dark:bg-gray-900 py-10 px-4">
         <div className="max-w-5xl mx-auto bg-gray-100 shadow-2xl dark:bg-gray-800 rounded-xl p-6">
           <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">

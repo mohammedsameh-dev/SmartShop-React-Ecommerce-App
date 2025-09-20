@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { domain, useUserStore } from "../Store";
@@ -12,21 +12,19 @@ export default function RegisterPage() {
 
   useEffect(() => {
     const localUsers = JSON.parse(localStorage.getItem("users") || "[]");
-    axios
-      .get(domain + "/users")
-      .then((res) => {
-        const mergedUsers = [
-          ...localUsers,
-          ...res.data.filter(
-            (apiUser) => !localUsers.
-            find((lu) => lu.id === apiUser.id)
-          ),
-        ];
-        setUsers(mergedUsers);
-        localStorage.setItem("users", JSON.stringify(mergedUsers));
-      })
-      .catch((err) => console.log(err));
+    if (localUsers.length > 0) {
+      setUsers(localUsers);
+    } else {
+      axios
+        .get(domain + "/users")
+        .then((res) => {
+          setUsers(res.data);
+          localStorage.setItem("users", JSON.stringify(res.data));
+        })
+        .catch((err) => console.log(err));
+    }
   }, []);
+
   const initialValues = {
     username: "",
     email: "",
@@ -73,7 +71,6 @@ export default function RegisterPage() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-dvh">
-      <Toaster position="top-center" reverseOrder={false} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -144,7 +141,10 @@ export default function RegisterPage() {
           </div>
 
           <div className="w-full flex justify-center items-center">
-            <button type="submit" className="btn btn-primary w-1/4">
+            <button
+              type="submit"
+              className="btn btn-primary w-full sm:w-1/2 lg:w-1/3"
+            >
               SignUp
             </button>
           </div>

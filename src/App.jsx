@@ -8,10 +8,12 @@ import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
 import UsersPage from "./Pages/UsersPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Toaster />
       <Routes>
         <Route
           path="/"

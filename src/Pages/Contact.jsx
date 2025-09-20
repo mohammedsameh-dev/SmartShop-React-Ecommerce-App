@@ -1,5 +1,5 @@
 import { Field, Form, Formik} from "formik";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import * as Yup from "yup";
 
 export default function Contact() {
@@ -17,7 +17,6 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
-      <Toaster/>
       <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-black dark:text-gray-100">
           Contact Us
