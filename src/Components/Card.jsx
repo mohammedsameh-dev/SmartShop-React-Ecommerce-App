@@ -10,7 +10,7 @@ export default function Card({ el }) {
   };
 
   return (
-    <div className="card bg-white dark:bg-gray-800 dark:hover:bg-blue-950 w-80 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 hover:scale-105 md:hover:scale-110">
+    <div className="card bg-white dark:bg-gray-800 dark:hover:bg-blue-950 w-80 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 hover:scale-105 hover:transition hover:duration-300 ">
       <figure className="px-6 pt-6">
         <LazyLoadImage
           src={el.image}
